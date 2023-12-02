@@ -28,6 +28,16 @@ public class Timer : MonoBehaviour
                 _timeLeft = time;
                 _timerOn = false;
             }
+
+            if(GameManager.Instance.State == GameManager.GameState.GameOver)
+            {
+                _timerOn = false;
+            }
+        }
+
+        if(_timeLeft <= 0 && GameManager.Instance.State != GameManager.GameState.GameOver)
+        {
+            GameManager.Instance.ChangeState(GameManager.GameState.GameOver);
         }
     }
     private void UpdateTimeText()

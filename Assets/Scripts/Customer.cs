@@ -35,7 +35,6 @@ public class Customer : MonoBehaviour
     private void OrderingState()
     {
         _orderCloud.gameObject.SetActive(true);
-        GameManager.Instance.MoveQueue();
     }
 
     private void ExitingState()
