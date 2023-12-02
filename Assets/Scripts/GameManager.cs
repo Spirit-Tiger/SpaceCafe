@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,36 +11,24 @@ public class GameManager : MonoBehaviour
     public CustomerPoints CustomerPoints;
     private Tween _tween;
 
+    public GameObject EndingScreen;
+
     public Transform CurrentCustomer;
     public TextMeshProUGUI ScoreNumber;
+    public TextMeshProUGUI EnergyNumber;
+
+    [SerializeField]
+    private float _energyCounter = 100;
+
+    private float _defaultEnergy;
     private int _score = 0;
 
     public bool SwithGravitator = false;
+    public bool QueueMoving = false;
+    public bool OrderCustomerMoving = false;
+    public bool MovingToExit = false;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (CustomerPoints.Customers.Count > 0)
-            {
-                NextCustomer();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            
-        }
-    }
+    private bool _pause = false;
 
     public enum GameState
     {
@@ -48,14 +37,72 @@ public class GameManager : MonoBehaviour
         GameOver,
     };
 
-    GameState State;
+    public GameState State;
 
     public int CurrentSection;
     public int HighestSection;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        _defaultEnergy = _energyCounter;
+
+    }
+
     private void Start()
     {
         ChangeState(GameState.StartGame);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (CustomerPoints.Customers.Count > 0)
+            {
+                MovingToExit = true;
+            }
+        }
+
+        if (QueueMoving)
+        {
+            MoveQueue();
+        }
+
+        if (OrderCustomerMoving)
+        {
+            MoveToOrder();
+        }
+
+        if (MovingToExit)
+        {
+            NextCustomer();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SwithGravitator = !SwithGravitator;
+
+        }
+
+        if (!SwithGravitator && !_pause)
+        {
+            _energyCounter -= 5f * Time.deltaTime;
+            _energyCounter = (float)Math.Round(_energyCounter, 2);
+            EnergyNumber.text = _energyCounter.ToString();
+        }
+
+        if (_energyCounter <= 0)
+        {
+            ChangeState(GameState.GameOver);
+        }
+
+    }
+
     public void ChangeState(GameState state)
     {
         State = state;
@@ -64,26 +111,42 @@ public class GameManager : MonoBehaviour
             case GameState.StartGame:
                 StartGame();
                 break;
-            case GameState.Restart:
-                break;
             case GameState.GameOver:
+                GameOver();
                 break;
         }
     }
     private void StartGame()
     {
+        DOTween.KillAll();
+        EndingScreen.SetActive(false);
+        _pause = false;
         StartCoroutine(FirstCustomer());
+        _energyCounter = _defaultEnergy;
     }
-  
+
     private void GameOver()
     {
-
+        _tween.Kill();
+        EndingScreen.SetActive(true);
+        _pause = true;
     }
     private IEnumerator FirstCustomer()
     {
         yield return new WaitForSeconds(1);
         CurrentCustomer = CustomerPoints.Customers.Dequeue();
-        _tween = CurrentCustomer.DOMove(CustomerPoints.OrderingPoint.position, 1).OnComplete(() => CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Ordering));
+        OrderCustomerMoving = true;
+    }
+
+    private void MoveToOrder()
+    {
+        CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.OrderingPoint.position, 4f * Time.deltaTime);
+        if (CurrentCustomer.position == CustomerPoints.OrderingPoint.position)
+        {
+            CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Ordering);
+            QueueMoving = true;
+            OrderCustomerMoving = false;
+        }
     }
 
     public void GiveFood()
@@ -95,20 +158,33 @@ public class GameManager : MonoBehaviour
 
     public void NextCustomer()
     {
-        CurrentCustomer.DOMove(CustomerPoints.ExitPoint.position, 1).OnComplete(() => CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Exiting));
-        GiveFood();
-        CurrentCustomer = CustomerPoints.Customers.Dequeue();
-        _tween = CurrentCustomer.DOMove(CustomerPoints.OrderingPoint.position, 1).OnComplete(() => CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Ordering));
-
+        CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.ExitPoint.position, 4f * Time.deltaTime);
+        if (CurrentCustomer.position == CustomerPoints.ExitPoint.position)
+        {
+            CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Exiting);
+            GiveFood();
+            CurrentCustomer = CustomerPoints.Customers.Dequeue();
+            OrderCustomerMoving = true;
+            MovingToExit = false;
+        }
+           
+           
     }
 
+    public Transform LastUser = null;
     public void MoveQueue()
     {
         int i = 0;
+       
         foreach (Transform cust in CustomerPoints.Customers)
         {
-            cust.DOMove(CustomerPoints.Points[i].position, 1);
+            LastUser = cust;
+            cust.position = Vector3.MoveTowards(cust.position, CustomerPoints.Points[i].position, 5 * Time.deltaTime);
             i++;
+        }
+        if (LastUser.position == CustomerPoints.Points[i - 1].position)
+        {
+            QueueMoving = false;
         }
     }
 }
