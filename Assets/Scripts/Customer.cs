@@ -1,17 +1,24 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    private GameObject _orderCloud;
+    private Transform _orderCloud;
+    public int CustomerId;
     public enum CustomerState
     {
         Ordering,
         Exiting,
         InQueue,
     };
-    CustomerState CurrentCustomerState = CustomerState.InQueue;
+    CustomerState CurrentCustomerState;
+
+    private void Awake()
+    {
+        _orderCloud = transform.GetChild(0);
+    }
     public void ChangeCustomerState(CustomerState state)
     {
         CurrentCustomerState = state;
@@ -21,13 +28,20 @@ public class Customer : MonoBehaviour
                 OrderingState();
                 break;
             case CustomerState.Exiting:
-                break;
-            case CustomerState.InQueue:
+                ExitingState();
                 break;
         }
     }
     private void OrderingState()
     {
-        _orderCloud.SetActive(true);
+        _orderCloud.gameObject.SetActive(true);
+        GameManager.Instance.MoveQueue();
     }
+
+    private void ExitingState()
+    {
+     
+    }
+
+
 }
