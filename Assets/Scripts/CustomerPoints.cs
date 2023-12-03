@@ -11,8 +11,6 @@ public class CustomerPoints : MonoBehaviour
     public Queue<Transform> Customers = new Queue<Transform>();
     public List<Transform> InGameCustomers = new List<Transform>();
 
-    //public List<CustomerData> CustomerData = new List<CustomerData>();
-
     public GameObject CustomerPrefub;
     private void Awake()
     {
@@ -22,7 +20,6 @@ public class CustomerPoints : MonoBehaviour
             GameObject customer = Instantiate(CustomerPrefub);
             InGameCustomers.Add(customer.transform);
             customer.GetComponent<Customer>().CustomerId = i;
-            //customer.GetComponent<Customer>().Data = CustomerData[i];
             customer.transform.position = Points[i].position;
             Customers.Enqueue(customer.transform);
             
