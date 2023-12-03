@@ -7,6 +7,7 @@ public class Customer : MonoBehaviour
 {
     private Transform _orderCloud;
     public int CustomerId;
+    public CustomerData Data;
     public enum CustomerState
     {
         Ordering,

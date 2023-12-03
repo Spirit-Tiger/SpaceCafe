@@ -8,8 +8,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public List<GameStage> Stages = new List<GameStage>(3);
+
+
     public CustomerPoints CustomerPoints;
-    private Tween _tween;
 
     public GameObject EndingScreen;
 
@@ -19,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private float _energyCounter = 100;
+
+    [SerializeField]
+    private float _energyUsageSpeed = 2f;
 
     private float _defaultEnergy;
     private int _score = 0;
@@ -59,14 +64,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (CustomerPoints.Customers.Count > 0)
-            {
-                MovingToExit = true;
-            }
-        }
-
         if (QueueMoving)
         {
             MoveQueue();
@@ -91,7 +88,7 @@ public class GameManager : MonoBehaviour
 
         if (!SwithGravitator && !_pause)
         {
-            _energyCounter -= 5f * Time.deltaTime;
+            _energyCounter -= _energyUsageSpeed * Time.deltaTime;
             _energyCounter = (float)Math.Round(_energyCounter, 2);
             EnergyNumber.text = _energyCounter.ToString();
         }
@@ -127,7 +124,6 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        _tween.Kill();
         EndingScreen.SetActive(true);
         _pause = true;
     }
@@ -151,7 +147,6 @@ public class GameManager : MonoBehaviour
 
     public void GiveFood()
     {
-        CurrentCustomer.GetChild(0).gameObject.SetActive(false);
         _score += 10;
         ScoreNumber.text = _score.ToString();
     }
