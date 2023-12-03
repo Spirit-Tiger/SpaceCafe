@@ -11,6 +11,15 @@ public class GiveButton : MonoBehaviour
         {
             if (GameManager.Instance.CustomerPoints.Customers.Count > 0)
             {
+                if (CurrentDish.GetComponent<CurrentDish>().Correct)
+                {
+                    GameManager.Instance.Score += (int)GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food;
+                }
+                else
+                {
+                    GameManager.Instance.Score += (int)GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food/2;
+                }
+
                 GameManager.Instance.MovingToExit = true;
                 GameManager.Instance.CurrentCustomer.GetChild(0).gameObject.SetActive(false);
                 GameManager.Instance.CurrentCustomer.GetChild(1).gameObject.SetActive(true);

@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI timerText;
     private float _timeLeft = 0f;
     private bool _timerOn = false;
+    [SerializeField] private float _minusTime = 0.08f;
     private void Start()
     {
         _timeLeft = time;
@@ -20,8 +21,16 @@ public class Timer : MonoBehaviour
         {
             if (_timeLeft > 0)
             {
-                _timeLeft -= Time.deltaTime;
-                UpdateTimeText();
+                if (GameManager.Instance.GravityState == 2)
+                {
+                    _timeLeft -= Time.deltaTime + _minusTime;
+                    UpdateTimeText();
+                }
+                else
+                {
+                    _timeLeft -= Time.deltaTime;
+                    UpdateTimeText();
+                }
             }
             else
             {
@@ -29,13 +38,13 @@ public class Timer : MonoBehaviour
                 _timerOn = false;
             }
 
-            if(GameManager.Instance.State == GameManager.GameState.GameOver)
+            if (GameManager.Instance.State == GameManager.GameState.GameOver)
             {
                 _timerOn = false;
             }
         }
 
-        if(_timeLeft <= 0 && GameManager.Instance.State != GameManager.GameState.GameOver)
+        if (_timeLeft <= 0 && GameManager.Instance.State != GameManager.GameState.GameOver)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.GameOver);
         }
