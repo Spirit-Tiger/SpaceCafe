@@ -11,38 +11,41 @@ public class CustomerPoints : MonoBehaviour
     public Queue<Transform> Customers = new Queue<Transform>();
     public List<Transform> InGameCustomers = new List<Transform>();
 
-    //public List<CustomerData> CustomerData = new List<CustomerData>();
-
-    public GameObject CustomerPrefub;
-    private void Awake()
+    private void Start()
     {
-       
-        for (int i = 0; i < Points.Count; i++)
+
+        for (int i = 0; i < GameManager.Instance.PresentStage.Customers.Count; i++)
         {
-            GameObject customer = Instantiate(CustomerPrefub);
+
+            GameObject customer = Instantiate(GameManager.Instance.Stage1.Customers[i].custPrefub);
             InGameCustomers.Add(customer.transform);
             customer.GetComponent<Customer>().CustomerId = i;
-            //customer.GetComponent<Customer>().Data = CustomerData[i];
+            customer.GetComponent<Customer>().Data = GameManager.Instance.Stage1.Customers[i];
             customer.transform.position = Points[i].position;
             Customers.Enqueue(customer.transform);
-            
+
         }
+
+
+
     }
 
     public void ResetCustomers()
     {
         foreach (var c in InGameCustomers)
         {
-           Destroy(c.gameObject);
+            Destroy(c.gameObject);
         }
 
         InGameCustomers.Clear();
         Customers.Clear();
-
-        for (int i = 0; i < Points.Count; i++)
+        for (int i = 0; i < GameManager.Instance.PresentStage.Customers.Count; i++)
         {
-            GameObject customer = Instantiate(CustomerPrefub);
+
+            GameObject customer = Instantiate(GameManager.Instance.Stage1.Customers[i].custPrefub);
+            InGameCustomers.Add(customer.transform);
             customer.GetComponent<Customer>().CustomerId = i;
+            customer.GetComponent<Customer>().Data = GameManager.Instance.Stage1.Customers[i];
             customer.transform.position = Points[i].position;
             Customers.Enqueue(customer.transform);
 

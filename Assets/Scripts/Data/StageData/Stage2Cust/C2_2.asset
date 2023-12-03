@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c50bb60be4239b4c87dd2c4653fb595, type: 3}
-  m_Name: C3
+  m_Name: C2_2
   m_EditorClassIdentifier: 
-  race: 0
-  food: 40
+  custPrefub: {fileID: 0}
+  race: 1
+  food: 50

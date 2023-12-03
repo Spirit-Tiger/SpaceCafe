@@ -15,6 +15,7 @@ public class Plate : MonoBehaviour
             other.transform.rotation = Quaternion.Euler(0, 0, 0);   
             other.transform.GetComponent<Rigidbody>().freezeRotation = true;
             other.transform.SetParent(CurrentDish);
+            Cooking.Instance.CanSell = true;
         }
     }
 }

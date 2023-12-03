@@ -10,4 +10,5 @@ public class GameStage : ScriptableObject
     public List<CustomerData> Customers;
 
     public int Time;
+    public int Energy;
 }

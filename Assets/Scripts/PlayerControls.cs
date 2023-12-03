@@ -20,4 +20,10 @@ public class PlayerControls : MonoBehaviour
             Player.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
     }
+
+    public void SwitchToStart()
+    {
+        _playerInKitchen = false;
+        Player.rotation = Quaternion.Euler(0f, -90f, 0f);
+    }
 }
