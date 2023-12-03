@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,14 +9,18 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public List<GameStage> Stages = new List<GameStage>(3);
 
-
     public CustomerPoints CustomerPoints;
 
     public GameObject EndingScreen;
 
     public Transform CurrentCustomer;
+
     public TextMeshProUGUI ScoreNumber;
     public TextMeshProUGUI EnergyNumber;
+
+    public GameStage Stage1;
+    public GameStage Stage2;
+    public GameStage Stage3;
 
     [SerializeField]
     private float _energyCounter = 100;
@@ -26,8 +29,9 @@ public class GameManager : MonoBehaviour
     private float _energyUsageSpeed = 2f;
 
     private float _defaultEnergy;
-    private int _score = 0;
+    public int Score = 0;
 
+    public int GravityState = 1;
     public bool SwithGravitator = false;
     public bool QueueMoving = false;
     public bool OrderCustomerMoving = false;
@@ -86,11 +90,22 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (!SwithGravitator && !_pause)
+        if (GravityState == 3 && !_pause)
         {
             _energyCounter -= _energyUsageSpeed * Time.deltaTime;
             _energyCounter = (float)Math.Round(_energyCounter, 2);
             EnergyNumber.text = _energyCounter.ToString();
+        }
+
+
+        if (GravityState == 1 && !_pause)
+        {
+            if (_energyCounter < 100)
+            {
+                _energyCounter += 0.7f * Time.deltaTime;
+                _energyCounter = (float)Math.Round(_energyCounter, 2);
+                EnergyNumber.text = _energyCounter.ToString();
+            }
         }
 
         if (_energyCounter <= 0)
@@ -115,7 +130,6 @@ public class GameManager : MonoBehaviour
     }
     private void StartGame()
     {
-        DOTween.KillAll();
         EndingScreen.SetActive(false);
         _pause = false;
         StartCoroutine(FirstCustomer());
@@ -139,6 +153,7 @@ public class GameManager : MonoBehaviour
         CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.OrderingPoint.position, 4f * Time.deltaTime);
         if (CurrentCustomer.position == CustomerPoints.OrderingPoint.position)
         {
+            Cooking.Instance.GiveIngredients(CurrentCustomer.GetComponent<Customer>().Data.food);
             CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Ordering);
             QueueMoving = true;
             OrderCustomerMoving = false;
@@ -147,8 +162,7 @@ public class GameManager : MonoBehaviour
 
     public void GiveFood()
     {
-        _score += 10;
-        ScoreNumber.text = _score.ToString();
+        ScoreNumber.text = Score.ToString();
     }
 
     public void NextCustomer()
