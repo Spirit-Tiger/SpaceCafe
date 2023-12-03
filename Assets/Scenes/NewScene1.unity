@@ -2577,7 +2577,7 @@ PrefabInstance:
     - target: {fileID: 306572385254208253, guid: 0af553cf03eec544484e693621f6d20b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.8
+      value: -5.45
       objectReference: {fileID: 0}
     - target: {fileID: 306572385254208253, guid: 0af553cf03eec544484e693621f6d20b,
         type: 3}
@@ -3706,7 +3706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1496805f0d05b4886ae7d42e8502b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 1643347132}
 --- !u!1 &1675581808 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5138573207805078017, guid: dcee42bbbbf67364ab9224fad62bd3e3,
