@@ -7,7 +7,7 @@ public class GameStage : ScriptableObject
 {
     public int stageNumber;
 
-    public List<CustomerData> Customers;
+    public List<GameObject> Customers;
 
     public int Time;
 }
