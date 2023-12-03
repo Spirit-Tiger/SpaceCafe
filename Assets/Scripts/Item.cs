@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
     [SerializeField]
     [Range(0.0f, 1.0f)]
     private float _gravitation;
+    private float _initGrav;
 
     public GameObject CurrentDish;
     public int PositionInDish;
@@ -21,6 +22,7 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
+        _initGrav = _gravitation;
         rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main;
         CurrentDish = GameObject.Find("CurrentDish");
@@ -31,12 +33,16 @@ public class Item : MonoBehaviour
     {
         if (rb != null)
         {
-            if (GameManager.Instance.SwithGravitator)
+            if (GameManager.Instance.GravityState == 1)
             {
                 rb.useGravity = false;
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 10f, transform.position.z), _gravitation * Time.deltaTime);
             }
-            else
+            else if(GameManager.Instance.GravityState == 2)
+            {
+                rb.velocity = Vector3.zero;
+            }
+            else if (GameManager.Instance.GravityState == 3)
             {
                 rb.useGravity = true;
             }
@@ -53,7 +59,7 @@ public class Item : MonoBehaviour
         _offset = transform.position - camRay.GetPoint(planeDist);
         IsDragging = true;
 
-        if (CurrentDish.GetComponent<CurrentDish>().PrevPosition == 0)
+        if (CurrentDish.GetComponent<CurrentDish>().Counter == 0)
         {
             CurrentDish.GetComponent<CurrentDish>().PrevPosition = PositionInDish;
         }
@@ -81,15 +87,19 @@ public class Item : MonoBehaviour
         {
             if (collision.collider.CompareTag("Ingredient"))
             {
+                Transform newElement = collision.transform;
            
-                if(CurrentDish.GetComponent<CurrentDish>().PrevPosition < PositionInDish)
+                if (newElement.GetComponent<Item>().PositionInDish < CurrentDish.GetComponent<CurrentDish>().PrevPosition)
                 {
                     CurrentDish.GetComponent<CurrentDish>().Correct = false;
+                    Debug.Log("Incorrect");
                 }
+                CurrentDish.GetComponent<CurrentDish>().PrevPosition = newElement.GetComponent<Item>().PositionInDish;
                 CurrentDish.GetComponent<CurrentDish>().Counter++;
+  
                 CurrentDish.GetComponent<CurrentDish>().Check();
 
-                Transform newElement = collision.transform;
+                
                 float aditionalHeight = newElement.GetComponent<BoxCollider>().size.y;
                 newElement.GetComponent<Rigidbody>().isKinematic = true;
                 Destroy(newElement.GetComponent<Rigidbody>());
