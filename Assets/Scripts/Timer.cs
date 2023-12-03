@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private float _minusTime = 0.08f;
     private void Start()
     {
-        _timeLeft = time;
+        _timeLeft = GameManager.Instance.PresentStage.Time;
         _timerOn = true;
     }
     private void Update()
@@ -56,5 +56,16 @@ public class Timer : MonoBehaviour
         float minutes = Mathf.FloorToInt(_timeLeft / 60);
         float seconds = Mathf.FloorToInt(_timeLeft % 60);
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+    }
+
+    public void SetTime()
+    {
+        _timeLeft = GameManager.Instance.PresentStage.Time; 
+        _timerOn = true;
+    }
+
+    public float GetTimeLeft()
+    {
+       return _timeLeft;
     }
 }

@@ -13,7 +13,10 @@ public class Cooking : MonoBehaviour
     public GameObject Cheese;
     public GameObject Salat;
 
+    public bool CanSell = false;
+
     public List<Transform> FoodPoints = new List<Transform>();
+    public List<GameObject> FoodInGame = new List<GameObject>();
 
     private void Awake()
     {
@@ -37,7 +40,20 @@ public class Cooking : MonoBehaviour
             {
                 GameObject ingerdient = Instantiate(list[i]);
                 ingerdient.transform.position = FoodPoints[i].position;
+                FoodInGame.Add(ingerdient);
             }
         }
+    }
+
+    public void DestroyIngredients()
+    {
+        if(FoodInGame.Count > 0)
+        {
+            foreach (GameObject go in FoodInGame)
+            {
+                Destroy(go);
+            }
+        }
+  
     }
 }
