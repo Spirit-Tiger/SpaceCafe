@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Alian
   m_EditorClassIdentifier: 
   race: 1
-  food: 50
+  food: 0
