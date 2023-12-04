@@ -26,7 +26,6 @@ public class CurrentDish : MonoBehaviour
             Debug.Log("Complete");
         }
     }
-
     public void Reset()
     {
         Complete = false;
