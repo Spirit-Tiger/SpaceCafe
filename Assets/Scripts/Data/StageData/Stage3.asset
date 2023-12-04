@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stage3
   m_EditorClassIdentifier: 
   stageNumber: 3
-  Customers: []
+  Customers:
+  - {fileID: 11400000, guid: e9820cc4541df544895c5a858e669e67, type: 2}
   Time: 301
   Energy: 40

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEditorInternal.VersionControl.ListControl;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     public CustomerPoints CustomerPoints;
 
     public GameObject EndingScreen;
+    public GameObject WinningScreen;
 
     public Transform LastUser;
     public Transform CurrentCustomer;
@@ -19,13 +21,25 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ScoreNumber;
     public TextMeshProUGUI EnergyNumber;
 
-    public TextMeshProUGUI TotalScore;
+    public TextMeshProUGUI GlobalScoreText;
+    public TextMeshProUGUI TotalStageScore;
     public TextMeshProUGUI ScoreForEnergy;
     public TextMeshProUGUI ScoreForTime;
+    public TextMeshProUGUI ScoreWinningScreen;
+    public TextMeshProUGUI ScoreEndingScreen;
+
+    public TextMeshProUGUI StageClearedText; 
+    public TextMeshProUGUI NextBtnText;
 
     public GameStage Stage1;
     public GameStage Stage2;
     public GameStage Stage3;
+
+    public float GlobalScore;
+
+    public float Stage1Score;
+    public float Stage2Score;
+    public float Stage3Score;
 
     public PlayerControls PlayerControls;
 
@@ -57,7 +71,7 @@ public class GameManager : MonoBehaviour
     public GameState State;
 
     public int CurrentStage = 1;
-    public int HighestStage;
+    public int LastStage;
 
     private void Awake()
     {
@@ -68,23 +82,33 @@ public class GameManager : MonoBehaviour
 
         CurrentStage = 1;
 
-        if (CurrentStage == 1)
+        SetStage(CurrentStage);
+    }
+
+    public void SetStage(int stage)
+    {
+        if (stage == 1)
         {
+            CurrentStage = 1;
+            LastStage = 1;
             PresentStage = Stage1;
         }
-        if (CurrentStage == 2)
+        if (stage == 2)
         {
+            CurrentStage = 2;
+            LastStage = 2;
             PresentStage = Stage2;
 
         }
-        if (CurrentStage == 3)
+        if (stage == 3)
         {
+            CurrentStage = 3;
+            LastStage = 3;
             PresentStage = Stage3;
         }
         _energyCounter = PresentStage.Energy;
         EnergyNumber.text = _energyCounter.ToString();
-
-
+        transform.GetComponent<Timer>().SetTime();
     }
 
     private void Start()
@@ -149,9 +173,28 @@ public class GameManager : MonoBehaviour
     }
     private void StartGame()
     {
+        Score = 0;
+        ScoreNumber.text = Score.ToString();
+
+        if (CurrentStage == 1)
+        {
+            GlobalScore = 0;
+            Stage1Score = 0;
+        }
+        if (CurrentStage == 2)
+        {
+            GlobalScore -= Stage1Score;
+            Stage2Score = 0;
+
+        }
+        if (CurrentStage == 3)
+        {
+            GlobalScore -= Stage2Score;
+            Stage3Score = 0;
+        }
+        WinningScreen.SetActive(false);
         EndingScreen.SetActive(false);
         Cooking.Instance.DestroyIngredients();
-        transform.GetComponent<Timer>().SetTime();
         PlayerControls.SwitchToStart();
         LeverAnimator.SetTrigger("L_1");
         GravityState = 1;
@@ -166,6 +209,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         EndingScreen.SetActive(true);
+        ScoreEndingScreen.text = Score.ToString();
         _pause = true;
     }
     private IEnumerator FirstCustomer()
@@ -249,16 +293,43 @@ public class GameManager : MonoBehaviour
 
     private void CalculateStageScore()
     {
-        _pause = true; 
+        _pause = true;
 
-        float scoreForTime = transform.GetComponent<Timer>().GetTimeLeft() * 0.2f;
-        float scoreForEnergy = _energyCounter * 1.2f;
+        WinningScreen.SetActive(true);
+        float scoreForTime = (float)Math.Round(transform.GetComponent<Timer>().GetTimeLeft() * 0.2f, 2);
+        float scoreForEnergy = (float)Math.Round(_energyCounter * 1.2f, 2); ;
 
         float totalScore = Score + scoreForTime + scoreForEnergy;
+        if (CurrentStage == 1)
+        {
+            Stage1Score = totalScore;
+            GlobalScore = totalScore;
+
+            StageClearedText.text = "Stage 1 Complete";
+            NextBtnText.text = "Next Stage";
+        }
+        if (CurrentStage == 2)
+        {
+            Stage2Score = totalScore;
+            GlobalScore = Stage1Score + totalScore;
+
+            StageClearedText.text = "Stage 2 Complete";
+            NextBtnText.text = "Next Stage";
+        }
+        if (CurrentStage == 3)
+        {
+            Stage3Score = totalScore;
+            GlobalScore = Stage1Score + Stage2Score + totalScore;
+
+            StageClearedText.text = "Stage 3 Complete";
+            NextBtnText.text = "Start from beginning";
+        }
+        GlobalScoreText.text = GlobalScore.ToString();
 
         ScoreForTime.text = scoreForTime.ToString();
         ScoreForEnergy.text = scoreForEnergy.ToString();
-        TotalScore.text = totalScore.ToString();
+        TotalStageScore.text = totalScore.ToString();
+        ScoreWinningScreen.text = Score.ToString();
     }
 
 }
