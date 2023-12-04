@@ -11,11 +11,14 @@ public class Plate : MonoBehaviour
     {
         if (other.tag == "Ingredient" && CurrentDish.GetComponent<CurrentDish>().Complete)
         {
+            other.transform.GetComponent<Item>().IsDragging = false;
             other.transform.position = GivePoint.position;
             other.transform.rotation = Quaternion.Euler(0, 0, 0);   
             other.transform.GetComponent<Rigidbody>().freezeRotation = true;
+            other.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
             other.transform.SetParent(CurrentDish);
             Cooking.Instance.CanSell = true;
+
         }
     }
 }

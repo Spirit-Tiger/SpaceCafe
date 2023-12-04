@@ -10,7 +10,17 @@ public class CurrentDish : MonoBehaviour
     public int PrevPosition = 0;
     public void Check()
     {
-        if (Counter == 4)
+        if (GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food == CustomerData.Food.Burger && Counter == 4)
+        {
+            Complete = true;
+            Debug.Log("Complete");
+        }
+        else if (GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food == CustomerData.Food.Soda && Counter == 3)
+        {
+            Complete = true;
+            Debug.Log("Complete");
+        }
+        else if (GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food == CustomerData.Food.Soup && Counter == 3)
         {
             Complete = true;
             Debug.Log("Complete");
