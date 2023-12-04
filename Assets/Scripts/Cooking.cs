@@ -16,6 +16,7 @@ public class Cooking : MonoBehaviour
     public bool CanSell = false;
 
     public List<Transform> FoodPoints = new List<Transform>();
+    public List<Transform> FoodPoints2 = new List<Transform>();
     public List<GameObject> FoodInGame = new List<GameObject>();
 
     private void Awake()
@@ -39,7 +40,15 @@ public class Cooking : MonoBehaviour
             for (int i =0; i < 5; i++)
             {
                 GameObject ingerdient = Instantiate(list[i]);
-                ingerdient.transform.position = FoodPoints[i].position;
+                if(GameManager.Instance.CurrentCustomer.GetComponent<Customer>().CustomerId % 2 == 0)
+                {
+                    ingerdient.transform.position = FoodPoints2[i].position;
+                }
+                else
+                {
+                    ingerdient.transform.position = FoodPoints[i].position;
+                }
+           
                 FoodInGame.Add(ingerdient);
             }
         }
