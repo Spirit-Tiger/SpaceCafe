@@ -38,7 +38,7 @@ public class Item : MonoBehaviour
                 rb.useGravity = false;
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 10f, transform.position.z), _gravitation * Time.deltaTime);
             }
-            else if(GameManager.Instance.GravityState == 2)
+            else if (GameManager.Instance.GravityState == 2)
             {
                 rb.velocity = Vector3.zero;
             }
@@ -91,7 +91,7 @@ public class Item : MonoBehaviour
             if (collision.collider.CompareTag("Ingredient") && transform.CompareTag("Ingredient"))
             {
                 Transform newElement = collision.transform;
-           
+
                 if (newElement.GetComponent<Item>().PositionInDish < CurrentDish.GetComponent<CurrentDish>().PrevPosition)
                 {
                     CurrentDish.GetComponent<CurrentDish>().Correct = false;
@@ -99,21 +99,21 @@ public class Item : MonoBehaviour
                 }
                 CurrentDish.GetComponent<CurrentDish>().PrevPosition = newElement.GetComponent<Item>().PositionInDish;
                 CurrentDish.GetComponent<CurrentDish>().Counter++;
-  
+
                 CurrentDish.GetComponent<CurrentDish>().Check();
 
-                
+
                 float aditionalHeight = newElement.GetComponent<BoxCollider>().size.y;
                 newElement.GetComponent<Rigidbody>().isKinematic = true;
                 Destroy(newElement.GetComponent<Rigidbody>());
-               newElement.GetComponent<BoxCollider>().enabled = false;
+                newElement.GetComponent<BoxCollider>().enabled = false;
 
                 newElement.SetParent(transform);
                 newElement.localPosition = Vector3.zero + new Vector3(0, transform.GetComponent<BoxCollider>().size.y * 0.5f + transform.GetComponent<BoxCollider>().size.y * 0.5f, 0);
 
-                transform.GetComponent<BoxCollider>().size = new Vector3(transform.GetComponent<BoxCollider>().size.x,transform.GetComponent<BoxCollider>().size.y + aditionalHeight, transform.GetComponent<BoxCollider>().size.z);
+                transform.GetComponent<BoxCollider>().size = new Vector3(transform.GetComponent<BoxCollider>().size.x, transform.GetComponent<BoxCollider>().size.y + aditionalHeight, transform.GetComponent<BoxCollider>().size.z);
                 newElement.localRotation = Quaternion.Euler(0f, 0f, 0f);
-               
+
             }
         }
     }

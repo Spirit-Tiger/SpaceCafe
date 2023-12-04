@@ -20,5 +20,28 @@ public class Plate : MonoBehaviour
             Cooking.Instance.CanSell = true;
 
         }
+        if (other.tag == "FinishSoda")
+        {
+            CurrentDish.GetComponent<CurrentDish>().Complete = true;
+            other.transform.GetComponent<Item>().IsDragging = false;
+            other.transform.position = GivePoint.position;
+            other.transform.rotation = Quaternion.Euler(0, 0, 0);
+            other.transform.GetComponent<Rigidbody>().freezeRotation = true;
+            other.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.transform.SetParent(CurrentDish);
+            Cooking.Instance.CanSell = true;
+        }
+
+        if (other.tag == "Soup")
+        {
+            CurrentDish.GetComponent<CurrentDish>().Complete = true;
+            other.transform.GetComponent<Item>().IsDragging = false;
+            other.transform.position = GivePoint.position;
+            other.transform.rotation = Quaternion.Euler(0, 0, 0);
+            other.transform.GetComponent<Rigidbody>().freezeRotation = true;
+            other.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.transform.SetParent(CurrentDish);
+            Cooking.Instance.CanSell = true;
+        }
     }
 }
