@@ -41,6 +41,8 @@ public class Plate : MonoBehaviour
             other.transform.GetComponent<Rigidbody>().freezeRotation = true;
             other.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
             other.transform.SetParent(CurrentDish);
+            MultiCook.Instance.transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            MultiCook.Instance.TopIsOpened = false;
             Cooking.Instance.CanSell = true;
         }
     }

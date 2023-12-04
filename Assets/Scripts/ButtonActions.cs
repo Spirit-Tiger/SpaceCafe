@@ -10,6 +10,11 @@ public class ButtonActions : MonoBehaviour
         GameManager.Instance.ChangeState(GameManager.GameState.StartGame);
     }
 
+    public void StartGame()
+    {
+        GameManager.Instance.ChangeState(GameManager.GameState.StartGame);
+    }
+
     public void NextStage()
     {
         if (GameManager.Instance.CurrentStage == 1)

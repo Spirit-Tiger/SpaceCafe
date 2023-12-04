@@ -15,12 +15,12 @@ public class BubbleScript : MonoBehaviour
         }
         if ((int)cusFood == 40)
         {
-            GameObject go = Instantiate(Cooking.Instance.Soup);
+            GameObject go = Instantiate(Cooking.Instance.Soup1, transform.position + new Vector3(0, 0.2f, 0.2f), Quaternion.Euler(0f, -25f, 0f));
             go.transform.SetParent(transform);
         }
         if ((int)cusFood == 30)
         {
-            GameObject go = Instantiate(Cooking.Instance.Soda);
+            GameObject go = Instantiate(Cooking.Instance.Soda1, transform.position + new Vector3(0, 0.2f, 0.2f), Quaternion.Euler(0f, -25f, 0f));
             go.transform.SetParent(transform);
         }
     }

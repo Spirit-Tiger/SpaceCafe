@@ -11,6 +11,8 @@ TagManager:
   - SodaCup
   - SodaButton
   - FinishSoda
+  - SoupIng
+  - Soup
   layers:
   - Default
   - TransparentFX

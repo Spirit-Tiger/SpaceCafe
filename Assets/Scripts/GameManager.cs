@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditorInternal.VersionControl.ListControl;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameStage Stage1;
     public GameStage Stage2;
     public GameStage Stage3;
+
+    public GameObject StartButton;
 
     public float GlobalScore;
 
@@ -118,11 +119,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(GameState.StartGame);
+        //ChangeState(GameState.StartGame);
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            CustomerPoints.ResetCustomers();
+            ChangeState(GameManager.GameState.StartGame);
+        }
         if (QueueMoving)
         {
             MoveQueue();
@@ -201,6 +207,7 @@ public class GameManager : MonoBehaviour
             GlobalScore -= Stage2Score;
             Stage3Score = 0;
         }
+        StartButton.SetActive(false);
         WinningScreen.SetActive(false);
         EndingScreen.SetActive(false);
         Cooking.Instance.DestroyIngredients();
@@ -230,8 +237,13 @@ public class GameManager : MonoBehaviour
 
     private void MoveToOrder()
     {
-        CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.OrderingPoint.position, 4f * Time.deltaTime);
-        if (CurrentCustomer.position == CustomerPoints.OrderingPoint.position)
+        Vector3 addTrans = Vector3.zero;
+        if (CurrentCustomer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
+        {
+            addTrans = new Vector3(0, 2.5f, 0);
+        }
+        CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.OrderingPoint.position + addTrans, 4f * Time.deltaTime);
+        if (CurrentCustomer.position == CustomerPoints.OrderingPoint.position + addTrans)
         {
             Cooking.Instance.GiveIngredients(CurrentCustomer.GetComponent<Customer>().Data.food);
             CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Ordering);
@@ -250,8 +262,13 @@ public class GameManager : MonoBehaviour
 
     public void NextCustomer()
     {
-        CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.ExitPoint.position, 4f * Time.deltaTime);
-        if (CurrentCustomer.position == CustomerPoints.ExitPoint.position)
+        Vector3 addTrans = Vector3.zero;
+        if (CurrentCustomer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
+        {
+            addTrans = new Vector3(0, 2.5f, 0);
+        }
+        CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.ExitPoint.position + addTrans, 4f * Time.deltaTime);
+        if (CurrentCustomer.position == CustomerPoints.ExitPoint.position + addTrans)
         {
             CurrentCustomer.gameObject.SetActive(false);
             CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Exiting);

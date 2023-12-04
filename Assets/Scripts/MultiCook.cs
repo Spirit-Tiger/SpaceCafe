@@ -4,31 +4,48 @@ using UnityEngine;
 
 public class MultiCook : MonoBehaviour
 {
+    public static MultiCook Instance;
     public GameObject CookedFood;
     public Transform SpawnPoint;
     public bool Cooking = false;
     public bool TopIsOpened = false;
     public GameObject FoodOut;
+    public int CookCounter = 0;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+
+            Instance = this;
+        }
 
 
+    }
     private void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0) && !Cooking)
         {
-            transform.GetChild(1).transform.rotation = Quaternion.Euler(0f,0f,90f);
+            transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            CookCounter = 0;
             TopIsOpened = true;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-       if( collision.gameObject.tag == "mFood" && !Cooking && TopIsOpened)
+        if (collision.gameObject.tag == "SoupIng" && TopIsOpened)
         {
             Cooking = true;
             collision.gameObject.SetActive(false);
-            transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            StartCoroutine(Open());
-            TopIsOpened = false;
+
+            CookCounter++;
+            if (CookCounter == 2)
+            {
+                transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                TopIsOpened = false;
+                StartCoroutine(Open());
+            }
         }
     }
 
@@ -39,6 +56,7 @@ public class MultiCook : MonoBehaviour
         TopIsOpened = true;
         transform.GetChild(1).transform.rotation = Quaternion.Euler(0f, 0f, 90f);
         FoodOut = Instantiate(CookedFood, SpawnPoint.position, Quaternion.identity);
+        CookCounter = 0;
     }
 
 

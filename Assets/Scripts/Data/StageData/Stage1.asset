@@ -16,5 +16,7 @@ MonoBehaviour:
   Customers:
   - {fileID: 11400000, guid: e9820cc4541df544895c5a858e669e67, type: 2}
   - {fileID: 11400000, guid: c93f3a698fb517244854dead2fefc9f8, type: 2}
-  Time: 241
-  Energy: 20
+  - {fileID: 11400000, guid: e7304da5b0f925e4cbc3383c8cea7fb5, type: 2}
+  - {fileID: 11400000, guid: 4408e15ab4dc35a4098baba2277d408d, type: 2}
+  Time: 300
+  Energy: 100

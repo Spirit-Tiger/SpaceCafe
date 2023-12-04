@@ -13,16 +13,17 @@ public class Cooking : MonoBehaviour
     public GameObject Soda;
     public GameObject Soup;
 
+    public GameObject Soda1;
+    public GameObject Soup1;
+
     public GameObject TopPart;
     public GameObject BottomPart;
     public GameObject Kotleta;
     public GameObject Cheese;
     public GameObject Salat;
 
-    public GameObject Shroom;
-    public GameObject Green;
-    public GameObject Jija;
-    public GameObject Powder;
+    public GameObject Onion;
+    public GameObject Frog;
 
     public GameObject SodaPart;
 
@@ -52,6 +53,7 @@ public class Cooking : MonoBehaviour
     {
         if (_givingFood)
         {
+            Debug.Log(_givingFood);
             int count = 0;
             if ((int)Food == 50)
             {
@@ -105,15 +107,14 @@ public class Cooking : MonoBehaviour
                         FoodInGameSoup[i].transform.position = Vector3.MoveTowards(FoodInGameSoup[i].transform.position, FoodPoints[i].position, 10f * Time.deltaTime);
                         if (FoodInGameSoup[i].transform.position == FoodPoints[i].position)
                         {
-                            count++;
-                            if (i == 3 && count == 3)
+                            _givingFood = false;
+                            if (i == FoodInGameSoup.Count - 1)
                             {
                                 _givingFood = false;
                                 foreach (var go in FoodInGameSoup)
                                 {
                                     go.GetComponent<BoxCollider>().enabled = true;
                                 }
-                                count = 0;
                             }
                         }
                     }
@@ -123,15 +124,14 @@ public class Cooking : MonoBehaviour
                         FoodInGameSoup[i].transform.position = Vector3.MoveTowards(FoodInGameSoup[i].transform.position, FoodPoints2[i].position, 10f * Time.deltaTime);
                         if (FoodInGameSoup[i].transform.position == FoodPoints2[i].position)
                         {
-                            count++;
-                            if (i == 3 && count == 3)
+                            _givingFood = false;
+                            if (i == FoodInGameSoup.Count - 1)
                             {
                                 _givingFood = false;
                                 foreach (var go in FoodInGameSoup)
                                 {
                                     go.GetComponent<BoxCollider>().enabled = true;
                                 }
-                                count = 0;
                             }
                         }
                     }
@@ -179,7 +179,6 @@ public class Cooking : MonoBehaviour
     }
     public void GiveIngredients(CustomerData.Food food)
     {
-        Debug.Log("Give123");
         List<GameObject> list = new List<GameObject>();
         List<GameObject> list2 = new List<GameObject>();
         Food = food;
@@ -190,7 +189,7 @@ public class Cooking : MonoBehaviour
             list.Add(Cheese);
             list.Add(Salat);
             list.Add(TopPart);
-            Debug.Log("List " + list[0].name);
+
             for (int i = 0; i < 5; i++)
             {
 
@@ -203,12 +202,11 @@ public class Cooking : MonoBehaviour
 
         if ((int)food == 40)
         {
-            list.Add(Shroom);
-            list.Add(Green);
-            list.Add(Jija);
-            list.Add(Powder);
+            list.Add(Onion);
+            list.Add(Frog);
+
             Debug.Log("List " + list[0].name);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
 
                 GameObject ingerdient = Instantiate(list[i], StartPosition.position, Quaternion.identity);
@@ -222,7 +220,6 @@ public class Cooking : MonoBehaviour
         {
             list.Add(SodaPart);
 
-            Debug.Log("List " + list[0].name);
             for (int i = 0; i < 1; i++)
             {
 

@@ -14,6 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageNumber: 3
   Customers:
+  - {fileID: 11400000, guid: 02bdde50fae4718458c7f6d248cac9c4, type: 2}
+  - {fileID: 11400000, guid: 21bbc7008d021c64cab690573272300b, type: 2}
+  - {fileID: 11400000, guid: c93f3a698fb517244854dead2fefc9f8, type: 2}
   - {fileID: 11400000, guid: e9820cc4541df544895c5a858e669e67, type: 2}
-  Time: 301
-  Energy: 40
+  - {fileID: 11400000, guid: e7304da5b0f925e4cbc3383c8cea7fb5, type: 2}
+  - {fileID: 11400000, guid: 80c01dbdcefbd1c4593abbabbbc95dea, type: 2}
+  - {fileID: 11400000, guid: 7b89037645a5f2845a8daea6e660ebca, type: 2}
+  - {fileID: 11400000, guid: e9820cc4541df544895c5a858e669e67, type: 2}
+  - {fileID: 11400000, guid: 7b89037645a5f2845a8daea6e660ebca, type: 2}
+  Time: 200
+  Energy: 80
