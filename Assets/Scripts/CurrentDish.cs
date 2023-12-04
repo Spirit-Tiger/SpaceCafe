@@ -15,7 +15,7 @@ public class CurrentDish : MonoBehaviour
             Complete = true;
             Debug.Log("Complete");
         }
-        else if (GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food == CustomerData.Food.Soda && Counter == 3)
+        else if (GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Data.food == CustomerData.Food.Soda && Counter == 1)
         {
             Complete = true;
             Debug.Log("Complete");

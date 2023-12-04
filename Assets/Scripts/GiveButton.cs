@@ -26,6 +26,7 @@ public class GiveButton : MonoBehaviour
                 Cooking.Instance.CanSell = false;
             }
             CurrentDish.GetComponent<CurrentDish>().Reset();
+            transform.GetComponent<AudioSource>().Play(0);
         }
     }
 }

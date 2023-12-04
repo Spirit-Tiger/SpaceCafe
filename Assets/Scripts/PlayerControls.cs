@@ -13,6 +13,10 @@ public class PlayerControls : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A) && _playerInKitchen)
             {
+                if (GameManager.Instance.DraggingItem != null)
+                {
+                    GameManager.Instance.DraggingItem.IsDragging = false;
+                }
                 _playerInKitchen = false;
                 Player.rotation = Quaternion.Euler(0f, -90f, 0f);
             }

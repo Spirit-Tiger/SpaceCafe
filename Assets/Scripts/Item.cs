@@ -58,17 +58,20 @@ public class Item : MonoBehaviour
         _dragPlane.Raycast(camRay, out planeDist);
         _offset = transform.position - camRay.GetPoint(planeDist);
         IsDragging = true;
-
+        GameManager.Instance.DraggingItem = this;
         if (CurrentDish.GetComponent<CurrentDish>().Counter == 0)
         {
             CurrentDish.GetComponent<CurrentDish>().PrevPosition = PositionInDish;
         }
+
+        Debug.Log("Down");
     }
 
     void OnMouseDrag()
     {
         if (IsDragging)
         {
+            Debug.Log("Draging");
             Ray camRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
             float planeDist;
             _dragPlane.Raycast(camRay, out planeDist);
@@ -85,7 +88,7 @@ public class Item : MonoBehaviour
     {
         if (IsDragging)
         {
-            if (collision.collider.CompareTag("Ingredient"))
+            if (collision.collider.CompareTag("Ingredient") && transform.CompareTag("Ingredient"))
             {
                 Transform newElement = collision.transform;
            

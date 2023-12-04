@@ -15,6 +15,6 @@ MonoBehaviour:
   stageNumber: 1
   Customers:
   - {fileID: 11400000, guid: e9820cc4541df544895c5a858e669e67, type: 2}
-  - {fileID: 11400000, guid: e9820cc4541df544895c5a858e669e67, type: 2}
+  - {fileID: 11400000, guid: c93f3a698fb517244854dead2fefc9f8, type: 2}
   Time: 241
   Energy: 20

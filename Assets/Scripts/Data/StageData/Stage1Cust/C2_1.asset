@@ -15,4 +15,4 @@ MonoBehaviour:
   custPrefub: {fileID: 1997370338783452842, guid: fd3866b14348b794f934d298e3d515f4,
     type: 3}
   race: 0
-  food: 50
+  food: 30

@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
     public bool OrderCustomerMoving = false;
     public bool MovingToExit = false;
 
+    public Item DraggingItem;
+
     private bool _pause = false;
 
     public enum GameState
@@ -264,7 +266,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 MovingToExit = false;
-                ChangeState(GameState.Complete);
+                if (State != GameState.GameOver)
+                {
+                    ChangeState(GameState.Complete);
+
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ public class CustomerData : ScriptableObject
     {
        Burger = 50,
        Soup = 40,
-       Soda = 35
+       Soda = 30
     };
 
     public Food food;
