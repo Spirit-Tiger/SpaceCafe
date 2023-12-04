@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ScoreForTime;
     public TextMeshProUGUI ScoreWinningScreen;
     public TextMeshProUGUI ScoreEndingScreen;
+    public TextMeshProUGUI StageNumberScreen;
 
-    public TextMeshProUGUI StageClearedText; 
+    public TextMeshProUGUI StageClearedText;
     public TextMeshProUGUI NextBtnText;
 
     public GameStage Stage1;
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
     {
         StartGame,
         Restart,
+        Complete,
         GameOver,
     };
 
@@ -106,6 +108,7 @@ public class GameManager : MonoBehaviour
             LastStage = 3;
             PresentStage = Stage3;
         }
+        StageNumberScreen.text = CurrentStage.ToString();
         _energyCounter = PresentStage.Energy;
         EnergyNumber.text = _energyCounter.ToString();
         transform.GetComponent<Timer>().SetTime();
@@ -166,6 +169,9 @@ public class GameManager : MonoBehaviour
             case GameState.StartGame:
                 StartGame();
                 break;
+            case GameState.Complete:
+                StartCoroutine(StageCleared());
+                break;
             case GameState.GameOver:
                 GameOver();
                 break;
@@ -173,6 +179,7 @@ public class GameManager : MonoBehaviour
     }
     private void StartGame()
     {
+        transform.GetComponent<Timer>().SetTime();
         Score = 0;
         ScoreNumber.text = Score.ToString();
 
@@ -257,9 +264,8 @@ public class GameManager : MonoBehaviour
             else
             {
                 MovingToExit = false;
-                StartCoroutine(StageCleared());
+                ChangeState(GameState.Complete);
             }
-
         }
     }
     public void MoveQueue()
@@ -321,7 +327,7 @@ public class GameManager : MonoBehaviour
             Stage3Score = totalScore;
             GlobalScore = Stage1Score + Stage2Score + totalScore;
 
-            StageClearedText.text = "Stage 3 Complete";
+            StageClearedText.text = "Game Complete Stage 3 Complete";
             NextBtnText.text = "Start from beginning";
         }
         GlobalScoreText.text = GlobalScore.ToString();

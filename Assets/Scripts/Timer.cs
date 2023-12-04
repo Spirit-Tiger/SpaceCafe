@@ -42,6 +42,11 @@ public class Timer : MonoBehaviour
             {
                 _timerOn = false;
             }
+
+            if (GameManager.Instance.State == GameManager.GameState.Complete)
+            {
+                _timerOn = false;
+            }
         }
 
         if (_timeLeft <= 0 && GameManager.Instance.State != GameManager.GameState.GameOver)
