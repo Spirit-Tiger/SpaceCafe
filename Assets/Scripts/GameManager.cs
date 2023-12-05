@@ -278,12 +278,12 @@ public class GameManager : MonoBehaviour
         CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.ExitPoint.position + addTrans, 4f * Time.deltaTime);
         if (CurrentCustomer.position == CustomerPoints.ExitPoint.position + addTrans)
         {
+            CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
             CurrentCustomer.gameObject.SetActive(false);
             CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Exiting);
             GiveFood();
             if (CustomerPoints.Customers.Count > 0)
             {
-                CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
                 OrderCustomerMoving = true;
                 MovingToExit = false;
                 CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Exiting);

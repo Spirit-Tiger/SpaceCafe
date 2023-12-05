@@ -9,6 +9,7 @@ public class GiveButton : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && CurrentDish.GetComponent<CurrentDish>().Complete && Cooking.Instance.CanSell)
         {
+            GameManager.Instance.CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
             if (GameManager.Instance.CustomerPoints.Customers.Count >= 0)
             {
                 if (CurrentDish.GetComponent<CurrentDish>().Correct)
