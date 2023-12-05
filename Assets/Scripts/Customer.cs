@@ -8,6 +8,8 @@ public class Customer : MonoBehaviour
     private Transform _orderCloud;
     public int CustomerId;
     public CustomerData Data;
+    public Animator Anim;
+    
     public enum CustomerState
     {
         Ordering,
@@ -19,6 +21,8 @@ public class Customer : MonoBehaviour
     private void Awake()
     {
         _orderCloud = transform.GetChild(0);
+        Anim = GetComponent<Animator>();
+
     }
     public void ChangeCustomerState(CustomerState state)
     {

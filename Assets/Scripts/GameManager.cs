@@ -237,6 +237,7 @@ public class GameManager : MonoBehaviour
 
     private void MoveToOrder()
     {
+        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
         Vector3 addTrans = Vector3.zero;
         if (CurrentCustomer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
         {
@@ -262,6 +263,7 @@ public class GameManager : MonoBehaviour
 
     public void NextCustomer()
     {
+        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
         Vector3 addTrans = Vector3.zero;
         if (CurrentCustomer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
         {
@@ -293,6 +295,7 @@ public class GameManager : MonoBehaviour
     }
     public void MoveQueue()
     {
+        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
         int i = 0;
 
         if (CustomerPoints.Customers.Count > 0)

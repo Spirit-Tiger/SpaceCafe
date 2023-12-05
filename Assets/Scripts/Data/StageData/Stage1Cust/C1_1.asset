@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c50bb60be4239b4c87dd2c4653fb595, type: 3}
   m_Name: C1_1
   m_EditorClassIdentifier: 
-  custPrefub: {fileID: 942159086275590756, guid: 17a9e042dde126a44b51f6ded3c877f3,
+  custPrefub: {fileID: 1562454097398675360, guid: 26ce90c0f7e5e9a448b205ae3660f6da,
     type: 3}
   race: 1
   food: 50

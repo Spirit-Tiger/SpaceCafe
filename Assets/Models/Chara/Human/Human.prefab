@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 177e2d01c48ba004ba9cdff884fcc70a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 177e2d01c48ba004ba9cdff884fcc70a,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 177e2d01c48ba004ba9cdff884fcc70a,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 177e2d01c48ba004ba9cdff884fcc70a,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 177e2d01c48ba004ba9cdff884fcc70a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 177e2d01c48ba004ba9cdff884fcc70a,
         type: 3}
@@ -71,5 +71,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 177e2d01c48ba004ba9cdff884fcc70a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1503304393276808994}
   m_SourcePrefab: {fileID: 100100000, guid: 177e2d01c48ba004ba9cdff884fcc70a, type: 3}
+--- !u!1 &8130360303532125270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 177e2d01c48ba004ba9cdff884fcc70a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8941261883872448775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1503304393276808994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130360303532125270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ba60779c7afc48b242d12d9ac40a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomerId: 0
+  Data: {fileID: 0}
