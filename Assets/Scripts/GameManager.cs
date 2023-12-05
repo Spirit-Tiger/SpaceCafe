@@ -233,11 +233,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         CurrentCustomer = CustomerPoints.Customers.Dequeue();
         OrderCustomerMoving = true;
+        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
     }
 
     private void MoveToOrder()
     {
-        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
+
         Vector3 addTrans = Vector3.zero;
         if (CurrentCustomer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
         {
@@ -246,11 +247,16 @@ public class GameManager : MonoBehaviour
         CurrentCustomer.position = Vector3.MoveTowards(CurrentCustomer.position, CustomerPoints.OrderingPoint.position + addTrans, 4f * Time.deltaTime);
         if (CurrentCustomer.position == CustomerPoints.OrderingPoint.position + addTrans)
         {
+           
             Cooking.Instance.GiveIngredients(CurrentCustomer.GetComponent<Customer>().Data.food);
             CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Ordering);
             if (CustomerPoints.Customers != null)
             {
                 QueueMoving = true;
+                foreach (Transform cust in CustomerPoints.Customers)
+                {
+                    cust.GetComponent<Customer>().Anim.SetTrigger("Go");
+                }
             }
             OrderCustomerMoving = false;
         }
@@ -263,7 +269,7 @@ public class GameManager : MonoBehaviour
 
     public void NextCustomer()
     {
-        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
+
         Vector3 addTrans = Vector3.zero;
         if (CurrentCustomer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
         {
@@ -277,10 +283,12 @@ public class GameManager : MonoBehaviour
             GiveFood();
             if (CustomerPoints.Customers.Count > 0)
             {
+                CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
                 OrderCustomerMoving = true;
                 MovingToExit = false;
                 CurrentCustomer.GetComponent<Customer>().ChangeCustomerState(Customer.CustomerState.Exiting);
                 CurrentCustomer = CustomerPoints.Customers.Dequeue();
+                CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
             }
             else
             {
@@ -295,7 +303,6 @@ public class GameManager : MonoBehaviour
     }
     public void MoveQueue()
     {
-        CurrentCustomer.GetComponent<Customer>().Anim.SetTrigger("Go");
         int i = 0;
 
         if (CustomerPoints.Customers.Count > 0)
