@@ -304,13 +304,18 @@ public class GameManager : MonoBehaviour
     public void MoveQueue()
     {
         int i = 0;
-
+      
         if (CustomerPoints.Customers.Count > 0)
         {
             foreach (Transform cust in CustomerPoints.Customers)
             {
+                Vector3 addTrans = Vector3.zero;
+                if (cust.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
+                {
+                    addTrans = new Vector3(0, 2.5f, 0);
+                }
                 LastUser = cust;
-                cust.position = Vector3.MoveTowards(cust.position, CustomerPoints.Points[i].position, 5 * Time.deltaTime);
+                cust.position = Vector3.MoveTowards(cust.position, CustomerPoints.Points[i].position + addTrans, 5 * Time.deltaTime);
                 i++;
             }
             if (LastUser.position == CustomerPoints.Points[i - 1].position)

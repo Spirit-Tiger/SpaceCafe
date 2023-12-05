@@ -21,7 +21,12 @@ public class CustomerPoints : MonoBehaviour
             InGameCustomers.Add(customer.transform);
             customer.GetComponent<Customer>().CustomerId = i;
             customer.GetComponent<Customer>().Data = GameManager.Instance.PresentStage.Customers[i];
-            customer.transform.position = Points[i].position;
+            Vector3 addTrans = Vector3.zero;
+            if (customer.GetComponent<Customer>().Data.race == CustomerData.Race.Orb)
+            {
+                addTrans = new Vector3(0, 2.5f, 0);
+            }
+            customer.transform.position = Points[i].position + addTrans;
             Customers.Enqueue(customer.transform);
 
         }
