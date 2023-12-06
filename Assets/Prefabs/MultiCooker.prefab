@@ -75,6 +75,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4815696413646053041}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff9f6d6a7a00c274bbac1706d28c19a2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6013838691058935554}
   m_SourcePrefab: {fileID: 100100000, guid: ff9f6d6a7a00c274bbac1706d28c19a2, type: 3}
 --- !u!1 &4373255889962858092 stripped
 GameObject:
@@ -94,6 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6e43ad4d0e8b94594e84c6495aef70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CookedFood: {fileID: 0}
+  SpawnPoint: {fileID: 0}
+  Cooking: 0
+  TopIsOpened: 0
+  FoodOut: {fileID: 0}
+  CookCounter: 0
+  animator: {fileID: 6013838691058935554}
 --- !u!65 &4815696413646053041
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115,3 +126,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.5145197, z: 1}
   m_Center: {x: 0, y: 0.2858622, z: 0}
+--- !u!95 &6013838691058935554
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4373255889962858092}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9151c13a048adfb4bbf78044b2c73762, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
